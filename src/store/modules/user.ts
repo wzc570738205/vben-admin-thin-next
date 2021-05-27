@@ -11,11 +11,11 @@ import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import {
   GetUserInfoByUserIdModel,
-  GetUserInfoByUserIdParams,
+  GetUserInfoParams,
   LoginParams,
 } from '/@/api/sys/model/userModel';
 
-import { getUserInfoById, loginApi } from '/@/api/sys/user';
+import { getUserInfo, loginApi } from '/@/api/sys/user';
 
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -88,13 +88,10 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const { token, userId } = data;
-
         // save token
-        this.setToken(token);
+        this.setToken(data);
         // get user info
-        const userInfo = await this.getUserInfoAction({ userId });
-
+        const userInfo = await this.getUserInfoAction({});
         const sessionTimeout = this.sessionTimeout;
         sessionTimeout && this.setSessionTimeout(false);
         !sessionTimeout && goHome && (await router.replace(PageEnum.BASE_HOME));
@@ -103,12 +100,12 @@ export const useUserStore = defineStore({
         return null;
       }
     },
-    async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
-      const userInfo = await getUserInfoById({ userId });
-      const { roles } = userInfo;
-      const roleList = roles.map((item) => item.value) as RoleEnum[];
+    async getUserInfoAction({}: GetUserInfoParams) {
+      const userInfo = await getUserInfo({});
+      //  const { roles } = userInfo;
+      // const roleList = roles.map((item) => item.value) as RoleEnum[];
       this.setUserInfo(userInfo);
-      this.setRoleList(roleList);
+      // this.setRoleList(roleList);
       return userInfo;
     },
     /**

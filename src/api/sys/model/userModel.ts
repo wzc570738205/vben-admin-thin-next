@@ -1,3 +1,12 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-26 11:06:24
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-27 09:51:27
+ */
+
+//import { UserInfo } from '/#/store';
+
 /**
  * @description: Login interface parameters
  */
@@ -9,8 +18,8 @@ export interface LoginParams {
 /**
  * @description: Get user information
  */
-export interface GetUserInfoByUserIdParams {
-  userId: string | number;
+export interface GetUserInfoParams {
+  userId?: string | number;
 }
 
 export interface RoleInfo {
@@ -23,7 +32,7 @@ export interface RoleInfo {
  */
 export interface LoginResultModel {
   userId: string | number;
-  token: string;
+  data: string;
   role: RoleInfo;
 }
 

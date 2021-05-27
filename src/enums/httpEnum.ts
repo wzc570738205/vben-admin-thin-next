@@ -1,10 +1,16 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-20 10:06:58
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-26 18:15:15
+ */
 /**
  * @description: Request result set
  */
 export enum ResultEnum {
-  SUCCESS = 0,
-  ERROR = 1,
-  TIMEOUT = 401,
+  SUCCESS = '200',
+  ERROR = '500',
+  TIMEOUT = '502',
   TYPE = 'success',
 }
 

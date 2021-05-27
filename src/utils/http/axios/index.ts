@@ -53,10 +53,10 @@ const transform: AxiosTransform = {
       return errorResult;
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, result, message } = data;
+    const { resultCode, message } = data;
 
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = data && Reflect.has(data, 'resultCode') && resultCode === ResultEnum.SUCCESS;
     if (!hasSuccess) {
       if (message) {
         // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
@@ -71,11 +71,11 @@ const transform: AxiosTransform = {
     }
 
     // 接口请求成功，直接返回结果
-    if (code === ResultEnum.SUCCESS) {
-      return result;
+    if (resultCode === ResultEnum.SUCCESS) {
+      return data.data;
     }
     // 接口请求错误，统一提示错误信息
-    if (code === ResultEnum.ERROR) {
+    if (resultCode === ResultEnum.ERROR) {
       if (message) {
         createMessage.error(data.message);
         Promise.reject(new Error(message));
@@ -87,7 +87,7 @@ const transform: AxiosTransform = {
       return errorResult;
     }
     // 登录超时
-    if (code === ResultEnum.TIMEOUT) {
+    if (resultCode === ResultEnum.TIMEOUT) {
       const timeoutMsg = t('sys.api.timeoutMessage');
       createErrorModal({
         title: t('sys.api.operationFailed'),
@@ -145,7 +145,7 @@ const transform: AxiosTransform = {
     const token = getToken();
     if (token) {
       // jwt token
-      config.headers.Authorization = token;
+      config.headers.token = token;
     }
     return config;
   },

@@ -1,16 +1,22 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-20 10:06:58
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-27 09:50:15
+ */
 import { defHttp } from '/@/utils/http/axios';
 import {
   LoginParams,
-  LoginResultModel,
-  GetUserInfoByUserIdParams,
+  // LoginResultModel,
+  GetUserInfoParams,
   GetUserInfoByUserIdModel,
 } from './model/userModel';
 
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 
 enum Api {
-  Login = '/login',
-  GetUserInfoById = '/getUserInfoById',
+  Login = '/login/auth',
+  GetUserInfo = '/login/getInfo',
   GetPermCodeByUserId = '/getPermCodeByUserId',
 }
 
@@ -18,7 +24,7 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<LoginResultModel>(
+  return defHttp.post<string>(
     {
       url: Api.Login,
       params,
@@ -30,17 +36,17 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
 }
 
 /**
- * @description: getUserInfoById
+ * @description: GetUserInfo
  */
-export function getUserInfoById(params: GetUserInfoByUserIdParams) {
-  return defHttp.get<GetUserInfoByUserIdModel>({
-    url: Api.GetUserInfoById,
+export function getUserInfo(params: GetUserInfoParams) {
+  return defHttp.post<GetUserInfoByUserIdModel>({
+    url: Api.GetUserInfo,
     params,
   });
 }
 
-export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
-  return defHttp.get<string[]>({
+export function getPermCodeByUserId(params: GetUserInfoParams) {
+  return defHttp.post<string[]>({
     url: Api.GetPermCodeByUserId,
     params,
   });

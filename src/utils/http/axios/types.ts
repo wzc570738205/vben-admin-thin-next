@@ -1,3 +1,9 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-26 11:06:24
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-26 18:06:39
+ */
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
 export interface RequestOptions {
@@ -21,10 +27,11 @@ export interface RequestOptions {
 }
 
 export interface Result<T = any> {
-  code: number;
+  resultCode: string;
   type: 'success' | 'error' | 'warning';
   message: string;
-  result: T;
+  success: boolean;
+  data: T;
 }
 
 // multipart/form-data: upload file

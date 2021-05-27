@@ -96,6 +96,7 @@
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   //import { onKeyStroke } from '@vueuse/core';
+  import { encryptByMd5 } from '/@/utils/cipher';
 
   export default defineComponent({
     name: 'LoginForm',
@@ -130,7 +131,7 @@
       const rememberMe = ref(false);
 
       const formData = reactive({
-        account: 'vben',
+        account: 'admin',
         password: '123456',
       });
 
@@ -147,14 +148,14 @@
           loading.value = true;
           const userInfo = await userStore.login(
             toRaw({
-              password: data.password,
+              password: encryptByMd5(data.password),
               username: data.account,
             })
           );
           if (userInfo) {
             notification.success({
               message: t('sys.login.loginSuccessTitle'),
-              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.username}`,
               duration: 3,
             });
           }
