@@ -17,6 +17,7 @@ import { isString } from '/@/utils/is';
 import { getToken } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
+import { useUserStore } from '/@/store/modules/user';
 
 import { errorResult } from './const';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -64,6 +65,10 @@ const transform: AxiosTransform = {
           createErrorModal({ title: t('sys.api.errorTip'), content: message });
         } else if (options.errorMessageMode === 'message') {
           createMessage.error(message);
+          // token过期
+          if (resultCode === ResultEnum.EXPIRED) {
+            useUserStore().logout(true);
+          }
         }
       }
       Promise.reject(new Error(message));
@@ -96,6 +101,7 @@ const transform: AxiosTransform = {
       Promise.reject(new Error(timeoutMsg));
       return errorResult;
     }
+
     return errorResult;
   },
 
