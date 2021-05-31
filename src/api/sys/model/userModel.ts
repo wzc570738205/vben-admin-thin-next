@@ -2,7 +2,7 @@
  * @Author: wangzhichiao<https://github.com/wzc570738205>
  * @Date: 2021-05-26 11:06:24
  * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
- * @LastEditTime: 2021-05-27 09:51:27
+ * @LastEditTime: 2021-05-31 16:44:22
  */
 
 //import { UserInfo } from '/#/store';
@@ -51,4 +51,10 @@ export interface GetUserInfoByUserIdModel {
   avatar: string;
   // 介绍
   desc?: string;
+}
+
+export interface GetUserListParams {
+  pageNum: number;
+  pageSize: number;
+  roleName: string;
 }

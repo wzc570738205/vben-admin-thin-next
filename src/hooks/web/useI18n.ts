@@ -1,3 +1,9 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-20 10:06:58
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-27 10:29:39
+ */
 import { i18n } from '/@/locales/setupI18n';
 
 type I18nGlobalTranslation = {
@@ -21,9 +27,7 @@ function getKey(namespace: string | undefined, key: string) {
   return `${namespace}.${key}`;
 }
 
-export function useI18n(
-  namespace?: string
-): {
+export function useI18n(namespace?: string): {
   t: I18nGlobalTranslation;
 } {
   const normalFn = {

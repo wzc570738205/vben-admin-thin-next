@@ -1,3 +1,9 @@
+/*
+ * @Author: wangzhichiao<https://github.com/wzc570738205>
+ * @Date: 2021-05-26 11:06:24
+ * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
+ * @LastEditTime: 2021-05-31 14:46:28
+ */
 import '/@/design/index.less';
 import 'virtual:windi.css';
 
@@ -11,7 +17,7 @@ import { setupErrorHandle } from '/@/logics/error-handle';
 import { setupGlobDirectives } from '/@/directives';
 import { setupI18n } from '/@/locales/setupI18n';
 import { registerGlobComp } from '/@/components/registerGlobComp';
-
+import Antd from 'ant-design-vue';
 // Register icon Sprite
 import 'virtual:svg-icons-register';
 
@@ -24,7 +30,11 @@ if (import.meta.env.DEV) {
 }
 
 (async () => {
-  const app = createApp(App);
+  const app: any = createApp(App);
+
+  // import ant golbe
+  app.config.productionTip = false;
+  app.use(Antd);
 
   // Configure store
   setupStore(app);
