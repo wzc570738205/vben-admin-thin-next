@@ -2,13 +2,14 @@
  * @Author: wangzhichiao<https://github.com/wzc570738205>
  * @Date: 2021-05-31 15:23:19
  * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
- * @LastEditTime: 2021-05-31 19:05:39
+ * @LastEditTime: 2021-06-01 15:46:27
 -->
 <template>
   <a-table
     :data-source="state.dataSource"
     :pagination="false"
-    size="middle"
+    :loading="state.loading"
+    :rowKey="(record, index) => index"
     :rowClassName="(record, index) => (index % 2 === 1 ? 'table-striped' : null)"
   >
     <a-table-column key="number" title="序号" data-index="number">
@@ -44,6 +45,7 @@
 
   interface state {
     dataSource: Array<string>;
+    loading: Boolean;
   }
   export default defineComponent({
     props: {
@@ -60,6 +62,7 @@
       console.log('props: ', props);
       let state: UnwrapRef<state> = reactive({
         dataSource: [],
+        loading: false,
       });
 
       // watch(
@@ -75,9 +78,14 @@
       });
 
       const getData = () => {
-        getUserList(toRaw(props.quaryParams)).then((res: any) => {
-          state.dataSource = res.list || [];
-        });
+        state.loading = true;
+        getUserList(toRaw(props.quaryParams))
+          .then((res: any) => {
+            state.dataSource = res.list || [];
+          })
+          .finally(() => {
+            state.loading = false;
+          });
       };
       return {
         state,
@@ -86,8 +94,4 @@
     },
   });
 </script>
-<style scoped>
-  :deep(.table-striped) {
-    background-color: #fafafa;
-  }
-</style>
+<style scoped lang="less"></style>

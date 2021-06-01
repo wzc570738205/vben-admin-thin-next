@@ -49,7 +49,38 @@
     opacity: 0.75;
   }
 }
-
+// =================================
+// ==============  form   ==========
+// =================================
+//调整表单元素的间距
 .ant-form-item {
   margin-bottom: 8px !important;
+}
+
+// =================================
+// ==============  table  ==========
+// =================================
+//斑马纹表格背景颜色
+.table-striped {
+  background-color: #fafafa;
+}
+
+html[data-theme='dark'] .table-striped {
+  background-color: #1d1d1d;
+}
+
+// =================================
+// ==============  wrapper  ==========
+// =================================
+//背景颜色
+.ant-table-wrapper {
+  padding: 6px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+html[data-theme='dark'] {
+  .ant-table-wrapper {
+    background-color: #151515;
+  }
 }

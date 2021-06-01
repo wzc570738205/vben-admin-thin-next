@@ -2,10 +2,10 @@
  * @Author: wangzhichiao<https://github.com/wzc570738205>
  * @Date: 2021-05-27 10:18:09
  * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
- * @LastEditTime: 2021-05-31 19:01:32
+ * @LastEditTime: 2021-06-01 15:46:09
 -->
 <template>
-  <div class="content p-4">
+  <div class="p-4">
     <Search @searchData="searchData" />
     <Table :quaryParams="state.quaryParams" ref="tableRef" />
     <a-row>
@@ -49,12 +49,4 @@
   });
 </script>
 
-<style lang="less">
-  .content {
-    .ant-table-wrapper {
-      padding: 6px;
-      background-color: #fff;
-      border-radius: 2px;
-    }
-  }
-</style>
+<style lang="less" scoped></style>
