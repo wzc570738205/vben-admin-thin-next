@@ -19,7 +19,7 @@ import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useUserStore } from '/@/store/modules/user';
 
-import { errorResult } from './const';
+//import { errorResult } from './const';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { createNow, formatRequestDate } from './helper';
 
@@ -32,7 +32,7 @@ const { createMessage, createErrorModal } = useMessage();
  */
 const transform: AxiosTransform = {
   /**
-   * @description: 处理请求数据
+   * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
    */
   transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { t } = useI18n();
@@ -51,7 +51,8 @@ const transform: AxiosTransform = {
     const { data } = res;
     if (!data) {
       // return '[HTTP] Request has no return value';
-      return errorResult;
+      throw new Error(t('sys.api.apiRequestFailed'));
+      //return errorResult;
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { resultCode, message } = data;
@@ -71,8 +72,8 @@ const transform: AxiosTransform = {
           }
         }
       }
-      Promise.reject(new Error(message));
-      return errorResult;
+      throw new Error(message);
+      //return errorResult;
     }
 
     // 接口请求成功，直接返回结果
@@ -83,13 +84,13 @@ const transform: AxiosTransform = {
     if (resultCode === ResultEnum.ERROR) {
       if (message) {
         createMessage.error(data.message);
-        Promise.reject(new Error(message));
+        throw new Error(message);
       } else {
         const msg = t('sys.api.errorMessage');
         createMessage.error(msg);
-        Promise.reject(new Error(msg));
+        throw new Error(msg);
       }
-      return errorResult;
+      //return errorResult;
     }
     // 登录超时
     if (resultCode === ResultEnum.TIMEOUT) {
@@ -98,11 +99,13 @@ const transform: AxiosTransform = {
         title: t('sys.api.operationFailed'),
         content: timeoutMsg,
       });
-      Promise.reject(new Error(timeoutMsg));
-      return errorResult;
+      throw new Error(timeoutMsg);
+      //return errorResult;
     }
 
-    return errorResult;
+    //return errorResult;
+    throw new Error(t('sys.api.apiRequestFailed'));
+    //return errorResult;
   },
 
   // 请求之前处理config

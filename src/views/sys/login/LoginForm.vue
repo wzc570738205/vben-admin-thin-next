@@ -119,7 +119,7 @@
     },
     setup() {
       const { t } = useI18n();
-      const { notification } = useMessage();
+      const { notification, createErrorModal } = useMessage();
       const { prefixCls } = useDesign('login');
       const userStore = useUserStore();
 
@@ -150,6 +150,7 @@
             toRaw({
               password: encryptByMd5(data.password),
               username: data.account,
+              mode: 'none', //不要默认的错误提示
             })
           );
           if (userInfo) {
@@ -159,6 +160,12 @@
               duration: 3,
             });
           }
+        } catch (error) {
+          createErrorModal({
+            title: t('sys.api.errorTip'),
+            content: error.message || t('sys.api.networkExceptionMsg'),
+            getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+          });
         } finally {
           loading.value = false;
         }
