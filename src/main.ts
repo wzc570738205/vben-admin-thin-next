@@ -2,7 +2,7 @@
  * @Author: wangzhichiao<https://github.com/wzc570738205>
  * @Date: 2021-05-26 11:06:24
  * @LastEditors: wangzhichiao<https://github.com/wzc570738205>
- * @LastEditTime: 2021-05-31 14:46:28
+ * @LastEditTime: 2021-06-02 08:56:35
  */
 import '/@/design/index.less';
 import 'virtual:windi.css';
@@ -20,7 +20,7 @@ import { registerGlobComp } from '/@/components/registerGlobComp';
 import Antd from 'ant-design-vue';
 // Register icon Sprite
 import 'virtual:svg-icons-register';
-
+import 'ant-design-vue/dist/antd.css';
 // Do not introduce on-demand in local development?
 // In the local development for introduce on-demand, the number of browser requests will increase by about 20%.
 // Which may slow down the browser refresh.
